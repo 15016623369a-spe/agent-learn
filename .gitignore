@@ -1,0 +1,14 @@
+# 本地密钥与配置，只提交无密钥的示例文件
+.env
+.env.*
+!.env.example
+
+# 环境与运行缓存
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store

@@ -1,0 +1,6 @@
+# 2026-10-14 在 Python 3.11.16 / Conda fde 中验证的直接依赖
+fastapi==0.143.0
+uvicorn==0.54.0
+pydantic==2.14.1
+httpx==0.28.1
+python-dotenv==1.2.4
