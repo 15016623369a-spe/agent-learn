@@ -1,6 +1,6 @@
 # C01 Lesson03：服务分层、任务提示词与最小运行记录
 
-日期：2026-10-14。Lesson02 已完成（用户确认全部作业已自行完成，代码检查通过）。本课进行中，教师示例已提供；保留 Conda fde，不增加第三方依赖。
+授课日期：2026-10-14；完成日期：2026-10-15。Lesson02、Lesson03 均已完成；本课邮件草稿作业已提交实际代码并检查通过。沿用 Conda fde，无新增第三方依赖。
 
 教学顺序：先讲知识点 → 教师示例 → 易错点 → 统一布置作业。课后答案按用户请求提供；用户请求答案表示已私下完成并希望对照。
 
@@ -126,9 +126,9 @@ request_id: str
 
 Literal 限制该字段只能为指定值；本课真实生成接口允许 llm，并设置默认值。所以构造 ReportResponse 时可以省略 mode。模型外部回复依旧是自由文本，这并不把 LLM 输出变成结构化 JSON。
 
-## 9. 教师示例怎么运行
+## 9. 已完成实践怎么运行
 
-教师文件已放入项目，Lesson01 和 Lesson02 原代码保留。不要创建新虚拟环境，不需重复安装依赖。
+本课实践位于 examples/lesson03，包含用户完成的邮件草稿接口；Lesson01 和 Lesson02 原代码保留。不要创建新虚拟环境，不需重复安装依赖。
 
 ```bash
 conda activate fde
@@ -139,7 +139,7 @@ python -m uvicorn examples.lesson03.api:app --reload --env-file .env --port 8001
 
 解释器应为 `/Users/jace/miniforge3/envs/fde/bin/python`。端口 8001 用于这节课，可以与第二课的 8000 区分。继续使用根目录现有 .env；模型名沿用第二课已跑通的配置。不要公开真实 Key。
 
-打开 http://127.0.0.1:8001/docs。教师示例提供 /health、/report-draft、/meeting-agenda；mock 接口仍可在旧课运行。
+打开 http://127.0.0.1:8001/docs。本课提供 /health、/report-draft、/meeting-agenda、/email-draft；mock 接口仍可在旧课运行。
 
 报告输入：
 
@@ -159,7 +159,7 @@ python -m uvicorn examples.lesson03.api:app --reload --env-file .env --port 8001
 python -m unittest discover -s tests -p test_lesson03.py -v
 ```
 
-教师示例已通过 4 项离线测试，覆盖两任务提示词差异、编号关联、无效输入提前停止、缺配置与未知异常。此结果不代表用户本课作业已完成或真实模型已验证。
+本课 10 项离线测试通过（原有 4 项、邮件 6 项），覆盖三类任务、编号关联、字段独立、输入边界、缺配置与超时等。用户已自行完成本课作业并对照答案；离线结果不冒充真实模型实验。
 
 ## 10. 易错点
 
@@ -171,7 +171,9 @@ python -m unittest discover -s tests -p test_lesson03.py -v
 - 422 与模型错误混淆：无效输入被 Pydantic 拦下，没有进入本例业务日志。
 - 原始异常与公开诊断混淆：不打印 Authorization、payload 全文或原始模型错误正文。
 
-## 11. 课后作业（先自行完成，再按需对答案）
+## 11. 课后作业（已完成，保留原题供复习）
+
+四项作业均已完成并对照解析；新增邮件接口已通过实际代码检查。详见 [作业与理解记录](C01-Lesson03-作业与理解记录.md)。
 
 ### 作业一：画出调用流程
 
@@ -200,7 +202,7 @@ python -m unittest discover -s tests -p test_lesson03.py -v
 
 交付修改后的代码位置与运行结果或完成说明。验收重点：能解释分层、任务提示词独立、模型调用复用、日志与响应可关联、无效输入不触发模型、密钥未泄露。
 
-完成后更新本课 handoff、README 与 GitHub；用户索要答案默认表示已自行完成，若验证发现具体错误再指出，不重复索要已确认完成的过程证据。
+本课已按用户明确请求整理完成记录并同步 GitHub。后续先上课；只有用户明确说“同步到 GitHub”才统一上传。用户索要答案默认表示已先自行完成。
 
 ## 12. 官方参考
 
@@ -210,14 +212,14 @@ python -m unittest discover -s tests -p test_lesson03.py -v
 - [Python 3.11：perf_counter](https://docs.python.org/3.11/library/time.html#time.perf_counter)。
 - [HTTPX：Timeouts](https://www.python-httpx.org/advanced/timeouts/)：网络阶段超时不等于业务总时长上限。
 
-## 13. 完整教师代码
+## 13. 本课完整实践代码（已完成）
 
-下文为逐文件完整代码，仓库中的可运行文件与此处一致。
+以下与当前项目文件一致，包含本课邮件草稿作业。
 
 ### examples/lesson03/__init__.py
 
 ```python
-"""C01 Lesson03：分层、任务提示词与最小运行日志。"""
+"""C01 Lesson03：已完成的课程实践——服务分层、任务提示词与运行记录。"""
 ```
 
 ### examples/lesson03/schemas.py
@@ -262,6 +264,23 @@ class MeetingResponse(BaseModel):
     agenda: str
     mode: Literal["llm"] = "llm"
     request_id: str
+
+#新增
+class EmailRequest(BaseModel):
+    requirement : str = Field(min_length=1, max_length=1000)
+
+    @field_validator("requirement")
+    @classmethod
+    def reject_blank(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("requirement 不能只有空白")
+        return value
+
+class EmailResponse(BaseModel):
+    draft: str
+    mode: Literal["llm"] = "llm"
+    request_id: str
 ```
 
 ### examples/lesson03/services.py
@@ -281,7 +300,13 @@ MEETING_SYSTEM_PROMPT = (
     "可以提出建议，但不能声称会议已召开、人员已确认或资料已读取。"
     "未提供的信息标为待确认，不要编造姓名、业务数字或已达成的结论。保持简短。"
 )
-
+#新增
+EMAIL_SYSTEM_PROMPT = (
+    "你是办公邮件草稿助手。根据用户需求，用中文生成邮件主题和正文草稿。"
+    "未提供的收件人姓名、日期、地点等信息使用[待补]占位，"
+    "不要编造业务数字、事实或已确认事项。"
+    "只生成草稿，不声称已经发送邮件。保持简短。"
+)
 
 def generate_report(requirement: str) -> str:
     return call_llm(REPORT_SYSTEM_PROMPT, requirement)
@@ -290,6 +315,9 @@ def generate_report(requirement: str) -> str:
 def generate_meeting(topic: str) -> str:
     task = f"请为会议主题“{topic}”准备议程与会前资料清单。"
     return call_llm(MEETING_SYSTEM_PROMPT, task)
+
+def generate_email(requirement: str) -> str:
+    return call_llm(EMAIL_SYSTEM_PROMPT, requirement)
 ```
 
 ### examples/lesson03/llm.py
@@ -366,7 +394,6 @@ def call_llm(system_prompt: str, user_content: str) -> str:
     if finish_reason != "stop":
         raise HTTPException(status_code=502, detail="模型未正常完成回答，请调整任务或输出长度")
     return content.strip()
-
 ```
 
 ### examples/lesson03/api.py
@@ -375,14 +402,16 @@ def call_llm(system_prompt: str, user_content: str) -> str:
 import json
 import logging
 from time import perf_counter
+#假设连续运行三个任务，后来发现其中一个失败了。我们需要知道：
+#这个失败响应，对应终端里的哪条记录？
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
+#有新增修改
+from .schemas import MeetingRequest, MeetingResponse, ReportRequest, ReportResponse, EmailRequest, EmailResponse
+from .services import generate_meeting, generate_report, generate_email
 
-from .schemas import MeetingRequest, MeetingResponse, ReportRequest, ReportResponse
-from .services import generate_meeting, generate_report
-
-app = FastAPI(title="办公 Agent 学习服务 · Lesson03 教师示例")
+app = FastAPI(title="办公 Agent 学习服务 · Lesson03 已完成实践")
 
 # 最小控制台日志：每个进程配置一次，不在每个请求里添加 handler。
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -390,7 +419,7 @@ logger = logging.getLogger("office_agent.lesson03")
 logger.setLevel(logging.INFO)
 
 
-def run_task(task_type: str, generate, user_input: str) -> tuple[str, str]:
+def run_task(task_type: str, generate, user_input: str) -> tuple[str, str]:#元组：有序不可变序列
     """执行传入的业务函数，返回文本与本次任务编号。"""
     request_id = uuid4().hex
     started = perf_counter()
@@ -416,13 +445,14 @@ def run_task(task_type: str, generate, user_input: str) -> tuple[str, str]:
             detail="服务内部错误，请根据请求编号排查",
             headers={"X-Request-ID": request_id},
         ) from None
-    finally:
+    finally:#一次模型调用可能成功，也可能超时或认证失败。我们希望这些路径都留下记
         # 不记录密钥、完整输入、完整模型回复或上游原始错误正文。
         event = {
             "event": "task_finished",
             "request_id": request_id,
             "task_type": task_type,
             "status_code": status_code,
+            #损耗计时
             "duration_ms": round((perf_counter() - started) * 1000, 2),
             "input_chars": len(user_input),
             "error_type": error_type,
@@ -441,6 +471,8 @@ def health():
 
 @app.post("/report-draft", response_model=ReportResponse)
 def report_draft(request: ReportRequest):
+    #report：给日志标明任务类型、generate_report：把要执行的函数传进去
+    #request.requirement:交给这个函数的输入
     text, request_id = run_task("report", generate_report, request.requirement)
     return ReportResponse(summary=text, request_id=request_id)
 
@@ -449,4 +481,9 @@ def report_draft(request: ReportRequest):
 def meeting_agenda(request: MeetingRequest):
     text, request_id = run_task("meeting", generate_meeting, request.topic)
     return MeetingResponse(agenda=text, request_id=request_id)
+#新增
+@app.post("/email-draft", response_model=EmailResponse)
+def email_draft(request: EmailRequest):
+    text, request_id = run_task("email", generate_email, request.requirement)
+    return EmailResponse(draft=text, request_id=request_id)
 ```

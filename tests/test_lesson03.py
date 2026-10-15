@@ -1,4 +1,4 @@
-"""验证教师示例的任务隔离与日志关联；不加载真实 .env。"""
+"""验证已完成课程实践的任务隔离与日志关联；不加载真实 .env。"""
 import json
 import os
 import unittest

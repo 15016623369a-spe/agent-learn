@@ -37,3 +37,21 @@ class MeetingResponse(BaseModel):
     agenda: str
     mode: Literal["llm"] = "llm"
     request_id: str
+
+#新增
+class EmailRequest(BaseModel):
+    requirement : str = Field(min_length=1, max_length=1000)
+
+    @field_validator("requirement")
+    @classmethod
+    def reject_blank(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("requirement 不能只有空白")
+        return value
+
+class EmailResponse(BaseModel):
+    draft: str
+    mode: Literal["llm"] = "llm"
+    request_id: str
+    
