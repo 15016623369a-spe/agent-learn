@@ -1,6 +1,6 @@
 # Agent Learn
 
-办公 Agent 应用开发的课程学习与实践记录。当前方向是企业知识驱动的办公分析与报告 Agent，已记录 C01 Lesson01–03；Lesson02、Lesson03 已完成。
+办公 Agent 应用开发的课程学习与实践记录。当前方向是企业知识驱动的办公分析与报告 Agent，已记录 C01 Lesson01–04；Lesson02、Lesson03、Lesson04 已完成。
 
 当前可生成报告提纲、会议议程和邮件草稿；尚未接入真实业务数据、SQL、RAG 或自主工具循环。
 
@@ -11,6 +11,7 @@
 | C01 Lesson01：HTTP / JSON / FastAPI | main.py：健康检查、模拟报告预览；历史交付情况见记录 | [Lesson01 handoff](docs/C01-Lesson01-handoff.md) |
 | C01 Lesson02：真实模型、配置与异常 | 已完成；lesson02.py：报告草稿、会议议程 | [Lesson02 handoff](handoff.md) |
 | C01 Lesson03：分层、任务提示词与运行记录 | 已完成；examples/lesson03：报告、会议、邮件草稿，request_id 与运行日志 | [讲义与完整实践代码](docs/C01-Lesson03.md) · [作业与理解记录](docs/C01-Lesson03-作业与理解记录.md) · [Lesson03 handoff](docs/C01-Lesson03-handoff.md) |
+| C01 Lesson04：Git、项目配置与可复现运行 | 已完成；本地版本练习、启动说明、忽略规则与课程交接 | [学习与作业记录](docs/C01-lesson04-notes.md) · [启动说明](docs/C01-Lesson04-runbook.md) · [Lesson04 handoff](docs/C01-Lesson04-handoff.md) |
 
 Lesson03 目录保留原路径，内容已由教师示例整理为用户完成的课程实践，包含新增邮件作业及学习注释。
 
@@ -66,9 +67,11 @@ Lesson03 测试页面：http://127.0.0.1:8001/docs 。
 python -B -m unittest discover -s tests -v
 ```
 
-2026-10-15，21 项测试通过：Lesson01–02 共 11 项、Lesson03 原有 4 项、邮件作业 6 项，包含多个子案例。使用 unittest 与 HTTPX 模拟，不加载真实 .env、不发外部模型请求、不产生模型费用。
+2026-10-17，复核 21 项测试通过：Lesson01–02 共 11 项、Lesson03 原有 4 项、邮件作业 6 项，包含多个子案例。使用 unittest 与 HTTPX 模拟，不加载真实 .env、不发外部模型请求、不产生模型费用。
 
 用户已确认 Lesson02 作业完成；Lesson03 作业已自行完成并对照答案，邮件实现已提交实际代码且检查通过。真实模型实验、用户完成确认和自动模拟验证分别记录，不将模拟回答描述为真实模型输出。
+
+Lesson04 用户已确认四项作业完成；已检查启动说明、Git 本地提交与忽略规则。另对用户既有提交中的 Lesson01 `/document-preview` 完成 1 项正常输入与 3 项无效输入离线检查，均通过。本次未请求真实模型。
 
 ## 实现边界
 
@@ -81,6 +84,6 @@ python -B -m unittest discover -s tests -v
 
 ## 后续记录方式
 
-先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。后续继续 C01 既定课程顺序。
+先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。下一课为 C01 Lesson05：最小任务提交与查询（同步执行、内存结果），随后 Lesson06：测试与 C01 验收；异步和数据库状态保存留待后续对应课程。
 
 真实 .env、API Key、虚拟环境与缓存始终排除，只提交空密钥的 .env.example。
