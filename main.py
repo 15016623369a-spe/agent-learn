@@ -27,3 +27,37 @@ def health():
 def preview_report(request: ReportRequest):
     result = mock_report(request.requirement)
     return ReportResponse(summary=result, mode="mock")
+
+from typing import Literal
+
+
+class DocumentRequest(BaseModel):
+    document_name: str = Field(min_length=1, max_length=200)
+    instruction: str = Field(min_length=1, max_length=2000)
+
+
+class DocumentResponse(BaseModel):
+    document_name: str
+    summary: str
+    mode: Literal["mock"]
+
+
+def mock_document_preview(
+    document_name: str,
+    instruction: str,
+) -> str:
+    return f"收到文档任务：对《{document_name}》执行“{instruction}”。"
+
+
+@app.post("/document-preview", response_model=DocumentResponse)
+def preview_document(request: DocumentRequest):
+    result = mock_document_preview(
+        request.document_name,
+        request.instruction,
+    )
+
+    return DocumentResponse(
+        document_name=request.document_name,
+        summary=result,
+        mode="mock",
+    )
