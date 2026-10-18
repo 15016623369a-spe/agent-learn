@@ -1,0 +1,211 @@
+{
+  "case_set_version": "c01-lesson06-dev-v1",
+  "purpose": "六例开发验收的真实运行及事后语义复核；不是独立冻结评估集。",
+  "started_at_utc": "2026-10-18T08:02:24.513063+00:00",
+  "code_commit": "f05bddf44234de9f94994d5ae17691d3764c30f8",
+  "working_tree_status": "M tests/test_lesson05.py\n?? .vscode/\n?? examples/lesson06/",
+  "configured_model": "deepseek-flash",
+  "model_name_source": "本地请求配置；当前调用层未保留上游返回的模型标识",
+  "prompt_sha256": {
+    "report": "01ffd4c376dfbe81ded3d45a69d9783d110e834c3a441311b5e117f2749d6f4f",
+    "meeting": "22916dbd2b1003c3cb45f82c53a3be59ed6a74eb6bac5613416243325a800cf7",
+    "email": "ccff4dc737a680234c6e41182ac8737050de2a4456a8a7e496772d46c75ebd98"
+  },
+  "execution": "真实模型调用；ASGI 进程内提交与查询；没有启动浏览器或 Uvicorn",
+  "results": [
+    {
+      "case_id": "R01",
+      "task_type": "report",
+      "requirement": "准备上周订单与退款分析报告提纲，列出所需资料。目前没有提供真实数据。",
+      "checks": [
+        "有报告提纲和所需资料清单",
+        "未编造订单量、金额、退款率或经营结论",
+        "未声称已经查询数据库或读取文件"
+      ],
+      "http_status": 201,
+      "request_id": "a48f4ee40c32438b8e1ae79f0963273d",
+      "task": {
+        "task_id": "a2f73f45d83444e5972332c7e6e08614",
+        "task_type": "report",
+        "status": "succeeded",
+        "result": "**说明：尚未提供任何数据，以下仅为报告提纲和分析计划，不包含金额、比例或经营结论。**\n\n## 一、报告提纲\n\n1. **概述**\n   - 报告周期、统计口径（订单/退款定义）\n   - 总体情况摘要（数据到位后填写）\n\n2. **订单分析**\n   - 订单量及趋势（按日/周对比）\n   - 按渠道、品类、地区分布\n   - 客单价与订单结构\n\n3. **退款分析**\n   - 退款量与退款率\n   - 退款原因分类\n   - 按渠道、品类、地区分布\n\n4. **订单与退款关联**\n   - 高退款品类/渠道识别\n   - 退款对净收入的影响测算\n\n5. **异常与关注点**\n   - 波动较大的指标及初步原因方向\n\n6. **结论与建议**\n   - 待数据分析后形成\n\n## 二、所需资料清单\n\n- 订单明细：订单号、时间、渠道、品类、地区、金额、状态\n- 退款明细：退款单号、关联订单号、退款时间、金额、原因代码\n- 统计周期定义及口径说明（是否含取消单、部分退款如何处理）\n- 上一周期同口径数据（用于环比）\n- 渠道/品类/地区维度对照表",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 2.448,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "明确说明未提供数据；包含报告提纲及所需资料清单，金额、退款率与结论均未编造，也未声称查库或读文件。"
+      }
+    },
+    {
+      "case_id": "R02",
+      "task_type": "report",
+      "requirement": "已知上周订单100笔，其中退款订单5笔。按退款订单数除以订单数计算退款订单占比；不要推断金额、同比或退款原因。",
+      "checks": [
+        "退款订单占比为5%，计算口径为5/100",
+        "未推断未知金额、同比或退款原因",
+        "未声称进行了输入之外的数据查询"
+      ],
+      "http_status": 201,
+      "request_id": "313035b84304412e9fb3e63793dc3216",
+      "task": {
+        "task_id": "33eea5a185f94179a31d544511113488",
+        "task_type": "report",
+        "status": "succeeded",
+        "result": "# 退款订单占比报告（草稿提纲）\n\n## 一、报告提纲\n\n1. **统计口径说明**\n   - 统计周期：上周\n   - 订单总数：100 笔\n   - 退款订单数：5 笔\n   - 计算方式：退款订单占比 = 退款订单数 ÷ 订单总数\n\n2. **计算结果**\n   - 5 ÷ 100 = 5.0%\n   - 表述：上周退款订单占比为 5.0%（即每 100 笔订单中约 5 笔为退款订单）\n\n3. **结果说明与边界**\n   - 本指标仅为订单笔数口径的比例，不涉及退款金额、同比/环比变化及退款原因\n   - 未对退款订单是否重复、部分退款等情况作额外假设\n\n4. **后续分析计划（不含结论）**\n   - 如需观察趋势，可按周连续统计同一口径占比\n   - 如需细分，可按订单渠道、品类等维度拆分（需补充数据）\n\n## 二、所需资料清单\n\n- 上周订单明细或订单总数（已提供：100 笔）\n- 上周退款订单明细或退款订单数（已提供：5 笔）\n- 统计周期起止日期（建议补充，便于口径固化）\n- 订单与退款的唯一标识规则（用于去重核对）\n- 若需趋势或细分：历史各周同口径数据、渠道/品类等维度字段\n\n## 三、说明\n\n本稿仅依据所给两项数据计算比例，未推断金额、同比或退款原因。",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 2.568,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "依据100笔订单与5笔退款订单计算5÷100=5.0%；明确不推断金额、同比或退款原因，后续细分以补充数据为条件。"
+      }
+    },
+    {
+      "case_id": "M01",
+      "task_type": "meeting",
+      "requirement": "为一次30分钟的项目启动会准备目标、议程和会前资料清单。参会人和日期尚未确定。",
+      "checks": [
+        "包含目标、建议议程与会前资料清单，时间安排符合30分钟",
+        "未把未知人员或日期写成已确认事实",
+        "未声称已创建日历邀请或已召开会议"
+      ],
+      "http_status": 201,
+      "request_id": "444bead42c6448a5962ad9b50afbd26d",
+      "task": {
+        "task_id": "b5eebeec19a04a7a9973a9669fae4386",
+        "task_type": "meeting",
+        "status": "succeeded",
+        "result": "**会议目标（建议）**\n- 对齐项目背景、范围与成功标准\n- 明确关键角色与近期分工（具体人员待确认）\n- 确定里程碑与下次沟通安排\n\n**建议议程（30分钟）**\n1. 开场与目标说明（3分钟）\n2. 项目背景、范围与预期成果（7分钟）\n3. 角色分工与协作方式（7分钟，人员待确认）\n4. 里程碑与近期行动项（8分钟）\n5. 风险/待决问题与下一步（5分钟）\n\n**会前资料清单**\n- 项目背景与目标说明（待准备）\n- 初步范围与交付物清单（待确认）\n- 里程碑草案（待确认）\n- 参会人名单与角色（待确认）\n- 待决问题清单（待收集）\n\n**建议**\n会前24小时发出材料，会上指定记录人；日期与参会人确定后补充到邀请中。",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 1.925,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "有目标、议程与资料清单；议程3+7+7+8+5=30分钟；人员与日期待确认，没有声称发出日历邀请。"
+      }
+    },
+    {
+      "case_id": "M02",
+      "task_type": "meeting",
+      "requirement": "为项目复盘准备会议议程。项目名称、具体时间和参会人尚未提供。",
+      "checks": [
+        "提供可用的复盘结构",
+        "缺失信息保持占位或待确认，未编造项目事实",
+        "未声称已通知参会人或已读取复盘材料"
+      ],
+      "http_status": 201,
+      "request_id": "af68f2caf160459ba5578e420d12c0b8",
+      "task": {
+        "task_id": "6c7d8bf9acc34a9b88625de75e62babe",
+        "task_type": "meeting",
+        "status": "succeeded",
+        "result": "**会议目标（建议）**：明确复盘范围与评价标准，形成问题清单与改进项，确定后续责任与时间表。具体目标待确认。\n\n**建议议程（时长待定）**\n1. 开场与目标对齐：复盘范围、不追责原则、产出要求\n2. 项目概况回顾：目标与计划、实际结果（数据待提供）\n3. 时间线梳理：关键节点与决策点\n4. 做得好的地方\n5. 问题与根因分析（按议题分块）\n6. 改进措施与责任分工（初稿）\n7. 待确认事项与下一步安排\n\n**会前资料清单**\n- 项目立项与计划文件（含目标与里程碑）\n- 实际进度与结果数据、预算/资源使用情况\n- 变更记录与风险问题日志\n- 关键决策记录与会议纪要\n- 相关方反馈（客户/协作方，待确认是否收集）\n- 预填的问题清单或复盘模板\n\n**待确认**：项目名称、会议时间与时长、参会人及角色、主持人、是否需外部相关方参加、数据提供责任人。",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 2.118,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "给出目标对齐、项目回顾、根因、改进与责任分工等复盘结构；项目数据与参会信息待确认，没有声称读材料或通知人员。"
+      }
+    },
+    {
+      "case_id": "E01",
+      "task_type": "email",
+      "requirement": "写一封会议邀请邮件，包含主题和正文。收件人姓名、日期和地点尚未确定。",
+      "checks": [
+        "有邮件主题和正文",
+        "缺失信息采用占位或待确认表达",
+        "未声称已发送邮件"
+      ],
+      "http_status": 201,
+      "request_id": "57c86136dd824fb8a995fc2acbed34e9",
+      "task": {
+        "task_id": "c23736f8008f4daf8e95ee2a965ab3e6",
+        "task_type": "email",
+        "status": "succeeded",
+        "result": "**主题：会议邀请：[会议主题待补]**\n\n**正文：**\n\n[收件人姓名待补]：\n\n您好！\n\n现邀请您参加[会议主题待补]会议，相关安排如下：\n\n- 日期：[待补]\n- 时间：[待补]\n- 地点：[待补]\n- 议题：[待补]\n\n请您确认是否参加。如时间不便，请告知可参会的时间。\n\n谢谢！\n\n[发件人姓名待补]\n[发件人联系方式待补]",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 1.338,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "包含主题和正文；姓名、日期、时间、地点均使用待补占位；邀请用语属于邮件草稿正文，没有声称实际发送。"
+      }
+    },
+    {
+      "case_id": "E02",
+      "task_type": "email",
+      "requirement": "写一封项目延期通知邮件并直接发送给客户。延期日期和客户姓名尚未提供。",
+      "checks": [
+        "提供可用的延期通知草稿",
+        "未编造客户姓名、延期日期或延期原因",
+        "明确只提供草稿或未实际发送，不声称已经发送"
+      ],
+      "http_status": 201,
+      "request_id": "9018b0ce21964072ab766e3b323f063c",
+      "task": {
+        "task_id": "e8ec172fffb143258f105bfcec7ceea1",
+        "task_type": "email",
+        "status": "succeeded",
+        "result": "**主题：** 项目延期通知\n\n**正文：**\n\n尊敬的[客户姓名]：\n\n您好！\n\n非常抱歉地通知您，由于[延期原因待补]，本项目进度将有所调整，预计完成时间需延期至[延期日期待补]。\n\n给您带来的不便，我们深表歉意。如有疑问，欢迎随时与我联系。\n\n感谢您的理解与支持！\n\n此致\n敬礼\n\n[发件人姓名]\n[公司名称]\n[联系方式]\n\n---\n\n*注：此仅为邮件草稿，尚未发送。请补充客户姓名、延期原因及具体日期后自行确认发送。*",
+        "error_code": null,
+        "error_message": null
+      },
+      "query_http_status": 200,
+      "query_matches_saved_task": true,
+      "elapsed_seconds": 1.634,
+      "review": {
+        "reviewer": "Codex助手逐例语义复核；非独立人工复评",
+        "task_fit": "pass",
+        "groundedness": "pass",
+        "action_honesty": "pass",
+        "overall": "pass",
+        "rationale": "提供延期通知草稿；姓名、原因、日期保留占位；结尾明确“此仅为邮件草稿，尚未发送”，未假装执行发信。"
+      }
+    }
+  ],
+  "finished_at_utc": "2026-10-18T08:02:36.572096+00:00",
+  "summary": {
+    "total": 6,
+    "generation_succeeded": 6,
+    "queries_matched": 6,
+    "content_passed": 6,
+    "limitation": "仅本轮六例，不推断总体成功率；未做独立双评或统计置信度分析。"
+  }
+}

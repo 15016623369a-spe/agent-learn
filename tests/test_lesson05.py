@@ -233,6 +233,25 @@ class Lesson05Tests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.stdout.strip(), "empty-new-process")
         self.assertIsNotNone(store.get_task(task_id))
 
+    async def test_missing_lookup_preserves_existing_task(self):
+        """Lesson06 作业：查不到其他任务，不应破坏已保存记录。"""
+        generate = Mock(return_value="已保存的报告提纲")
+        with patch.dict(services.GENERATORS, {"report": generate}), \
+             self.assertLogs(services.logger, level="INFO"):
+            created = await self.call("POST", "/tasks", {
+                "task_type": "report", "requirement": "准备报告",
+            })
+            self.assertEqual(created.status_code, 201)
+            original = created.json()["task"]
+
+            missing = await self.call("GET", "/tasks/not-exist")
+            self.assertEqual(missing.status_code, 404)
+
+            existing = await self.call("GET", "/tasks/" + original["task_id"])
+            self.assertEqual(existing.status_code, 200)
+            self.assertEqual(existing.json()["task"], original)
+            self.assertEqual(len(store._tasks), 1)
+            generate.assert_called_once_with("准备报告")
 
 if __name__ == "__main__":
     unittest.main()
