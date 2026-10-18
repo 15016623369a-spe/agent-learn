@@ -1,8 +1,8 @@
 # Agent Learn
 
-办公 Agent 应用开发的课程学习与实践记录。当前方向是企业知识驱动的办公分析与报告 Agent，已记录 C01 Lesson01–04；Lesson02、Lesson03、Lesson04 已完成。
+办公 Agent 应用开发的课程学习与实践记录。当前方向是企业知识驱动的办公分析与报告 Agent，已记录 C01 Lesson01–05；Lesson02–05 已完成。
 
-当前可生成报告提纲、会议议程和邮件草稿；尚未接入真实业务数据、SQL、RAG 或自主工具循环。
+当前可生成报告提纲、会议议程和邮件草稿，并按任务编号查询当前进程内的成功或失败记录；尚未接入真实业务数据、SQL、RAG 或自主工具循环。
 
 ## 课程与进度
 
@@ -12,6 +12,7 @@
 | C01 Lesson02：真实模型、配置与异常 | 已完成；lesson02.py：报告草稿、会议议程 | [Lesson02 handoff](handoff.md) |
 | C01 Lesson03：分层、任务提示词与运行记录 | 已完成；examples/lesson03：报告、会议、邮件草稿，request_id 与运行日志 | [讲义与完整实践代码](docs/C01-Lesson03.md) · [作业与理解记录](docs/C01-Lesson03-作业与理解记录.md) · [Lesson03 handoff](docs/C01-Lesson03-handoff.md) |
 | C01 Lesson04：Git、项目配置与可复现运行 | 已完成；本地版本练习、启动说明、忽略规则与课程交接 | [学习与作业记录](docs/C01-lesson04-notes.md) · [启动说明](docs/C01-Lesson04-runbook.md) · [Lesson04 handoff](docs/C01-Lesson04-handoff.md) |
+| C01 Lesson05：最小任务提交与查询 | 已完成；同步执行、task_id / request_id、内存记录与失败查询 | [讲义与实际代码](docs/C01-Lesson05.md) · [作业记录](docs/C01-Lesson05-作业与理解记录.md) · [Lesson05 handoff](docs/C01-Lesson05-handoff.md) |
 
 Lesson03 目录保留原路径，内容已由教师示例整理为用户完成的课程实践，包含新增邮件作业及学习注释。
 
@@ -36,6 +37,9 @@ python -m uvicorn lesson02:app --reload --env-file .env
 
 # Lesson03，使用 8001 端口
 python -m uvicorn examples.lesson03.api:app --reload --env-file .env --port 8001
+
+# Lesson05，使用 8002 端口
+python -m uvicorn examples.lesson05.api:app --reload --env-file .env --port 8002
 ```
 
 以上命令分别启动对应课程，按需选择。前两课默认均为 8000，切换时先停止旧服务。直接运行 Python 源文件不会自动启动 Uvicorn。
@@ -61,6 +65,19 @@ Lesson03 测试页面：http://127.0.0.1:8001/docs 。
 
 邮件接口只生成草稿，没有发信或删除邮件功能。成功响应编号与 task_finished 日志一致；进入业务函数后的失败将编号放在 X-Request-ID 响应头。输入校验的 422 不经过本例业务日志。
 
+
+## Lesson05 接口
+
+| 接口 | 输入 | 响应约定 |
+|---|---|---|
+| POST /tasks | task_type=report / meeting / email；requirement，1–1000 字符 | 201；request_id 与 task，task.status 为 succeeded 或 failed |
+| GET /tasks/{task_id} | 路径中的任务编号 | 找到返回 200 与已保存记录；不存在返回 404 |
+| GET /health | 无 | status=ok |
+
+Lesson05 页面：http://127.0.0.1:8002/docs 。POST 同步执行并保存结果，GET 不重新调用模型；重复提交相同需求会创建新任务。task_id 标识业务任务，request_id 每次提交或查询重新生成。输入无效返回 422 且不创建记录。
+
+任务创建成功与任务执行成功分别表达：HTTP 201 也可能包含 task.status=failed，任务内 error_code 是失败原因。内存记录不会随 Git 上传，重启或自动重载后丢失。
+
 ## 验证与完成记录
 
 ```bash
@@ -73,17 +90,19 @@ python -B -m unittest discover -s tests -v
 
 Lesson04 用户已确认四项作业完成；已检查启动说明、Git 本地提交与忽略规则。另对用户既有提交中的 Lesson01 `/document-preview` 完成 1 项正常输入与 3 项无效输入离线检查，均通过。本次未请求真实模型。
 
+2026-10-18，Lesson05 实际代码检查通过，用户已确认四项作业完成；新增九项离线回归后，整套 **30 项测试全部通过**。本次未请求真实模型，保留用户注释并修正包入口文件名。
+
 ## 实现边界
 
 - Lesson02 的会议任务曾复用报告提示词；Lesson03 已拆成报告、会议、邮件各自的提示词与共享调用。
 - HTTP 200 和 mode=llm 不能证明回答事实正确。
-- 当前仅有最小控制台业务日志，没有完整 Tracing、数据库状态保存、重试或任务恢复。
+- 当前有最小控制台业务日志与 Lesson05 进程内任务记录，没有完整 Tracing、数据库状态保存、重试或任务恢复。
 - 网络阶段超时不是任务总时长硬截止；duration_ms 也不是完整 HTTP 生命周期耗时。
 - 第一课历史实现仅有长度校验，纯空白仍返回 200；后两课增加了拒绝空白规则。
 - RAG、SQL、原生 Agent、部署等后续课程不因本课完成而登记为完成。
 
 ## 后续记录方式
 
-先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。下一课为 C01 Lesson05：最小任务提交与查询（同步执行、内存结果），随后 Lesson06：测试与 C01 验收；异步和数据库状态保存留待后续对应课程。
+先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。下一课为 C01 Lesson06：测试、最小基线与 C01 验收；异步和数据库状态保存留待后续对应课程。
 
 真实 .env、API Key、虚拟环境与缓存始终排除，只提交空密钥的 .env.example。
