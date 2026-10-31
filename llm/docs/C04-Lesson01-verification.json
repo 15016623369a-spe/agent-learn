@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-31",
+  "timezone": "Asia/Shanghai",
+  "python_version": "3.11.16",
+  "environment": "Conda fde",
+  "repository_path": "llm/lesson01.py",
+  "reviewed_user_source_sha256": "cfc52583bcb04feec0f3d3ffabf339ede824604e806e2f9b2d6f416a43e8d07d",
+  "published_source_sha256": "2b0b346f4a4efa4f378265272cc4affbf4326efa16e2eb1988645385329c7a1c",
+  "checks_passed": 15,
+  "checks_total": 15,
+  "checks": [
+    {
+      "name": "user_original_runs",
+      "passed": true,
+      "detail": "用户原文件直接运行退出码0；没有第4题打印。"
+    },
+    {
+      "name": "direct_entrypoint",
+      "passed": true,
+      "detail": "整理后的直接运行退出码0。"
+    },
+    {
+      "name": "module_entrypoint",
+      "passed": true,
+      "detail": "整理后的模块运行退出码0。"
+    },
+    {
+      "name": "entrypoint_outputs_equal",
+      "passed": true,
+      "detail": "两种入口的完整stdout一致。"
+    },
+    {
+      "name": "scenario_A",
+      "passed": true,
+      "detail": {
+        "input_status": "needs_info",
+        "missing_information": [
+          "明确时间范围、时区和筛选时间字段",
+          "明确订单金额的统计口径",
+          "提供订单数据或可用数据来源",
+          "需要明确按下单时所属部门，还是员工当前部门分组"
+        ],
+        "message_count": 2
+      }
+    },
+    {
+      "name": "scenario_B",
+      "passed": true,
+      "detail": {
+        "input_status": "needs_info",
+        "missing_information": [
+          "提供订单数据或可用数据来源",
+          "需要明确按下单时所属部门，还是员工当前部门分组"
+        ],
+        "message_count": 2
+      }
+    },
+    {
+      "name": "scenario_C",
+      "passed": true,
+      "detail": {
+        "input_status": "ready_for_calculation",
+        "missing_information": [],
+        "message_count": 2
+      }
+    },
+    {
+      "name": "whitespace_data_reference",
+      "passed": true,
+      "detail": "纯空白数据来源正确识别为唯一缺项。"
+    },
+    {
+      "name": "grouping_omitted_then_supplied",
+      "passed": true,
+      "detail": "删除分组口径后阻断；补充后通过信息完整性检查。"
+    },
+    {
+      "name": "blank_requirement_rejected",
+      "passed": true,
+      "detail": "requirement 不能为空"
+    },
+    {
+      "name": "messages_preserve_contract",
+      "passed": true,
+      "detail": "两条角色消息，任务契约序列化后可还原。"
+    },
+    {
+      "name": "handwritten_missing",
+      "passed": true,
+      "detail": "手写预期格式及状态与对应输入契约一致；未执行模型调用。"
+    },
+    {
+      "name": "handwritten_ready",
+      "passed": true,
+      "detail": "手写预期格式及状态与对应输入契约一致；未执行模型调用。"
+    },
+    {
+      "name": "user_logic_preserved",
+      "passed": true,
+      "detail": "用户扩展后的信息处理逻辑和教学输入保留；文案纠错不改变C的状态。"
+    },
+    {
+      "name": "source_unchanged_during_review",
+      "passed": true,
+      "detail": "本轮暂存整理前用户原文件未被改写。"
+    }
+  ],
+  "execution_boundary": {
+    "external_model_calls": 0,
+    "order_data_reads": 0,
+    "business_calculations": 0,
+    "handwritten_examples": "助手本轮补录的固定参考JSON，不是模型响应。",
+    "readiness": "非空声明检查通过，不保证数据来源存在或数据可用。"
+  },
+  "record_sources": {
+    "completion": "用户明确确认完成课程并索要参考答案。",
+    "user_code": "原文件已保存grouping_definition扩展。",
+    "assistant_additions": "更新说明、场景标题与分组文案，补录第4题手写样例及打印。",
+    "execution": "本次在fde实际执行，不回填用户私人练习历史。"
+  },
+  "legacy_regression": {
+    "command": "python -B -m unittest discover -s tests -v",
+    "tests_run": 31,
+    "passed": true,
+    "exit_code": 0,
+    "scope": "基于远端基线的原有C01测试；模型网络使用既有模拟，不读取真实.env。"
+  }
+}
