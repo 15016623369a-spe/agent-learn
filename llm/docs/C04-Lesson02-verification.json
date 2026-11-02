@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "environment": "Conda fde",
+  "python_version": "3.11.16",
+  "source_sha256": "f5e2ff88c30bd91314afd6f34386b5129c846d4812c6b7ac7aceac8709418301",
+  "source_location": "/Users/jace/agent学习/llm/lesson02.py",
+  "repository_path": "llm/lesson02.py",
+  "checks_passed": 15,
+  "checks_total": 15,
+  "checks": [
+    {
+      "name": "canonical_direct_repo_direct_module_outputs_equal",
+      "passed": true
+    },
+    {
+      "name": "source_and_sync_copy_identical",
+      "passed": true
+    },
+    {
+      "name": "six_current_case_version_records",
+      "passed": true
+    },
+    {
+      "name": "v0_v1_message_counts_2_8",
+      "passed": true
+    },
+    {
+      "name": "v0_v1_example_pairs_0_3",
+      "passed": true
+    },
+    {
+      "name": "current_missing_counts_4_2_0",
+      "passed": true
+    },
+    {
+      "name": "no_generation_executed",
+      "passed": true
+    },
+    {
+      "name": "three_user_assistant_example_pairs",
+      "passed": true
+    },
+    {
+      "name": "third_example_only_missing_grouping",
+      "passed": true
+    },
+    {
+      "name": "all_handwritten_examples_match_contract",
+      "passed": true
+    },
+    {
+      "name": "rules_and_current_input_identical_across_versions",
+      "passed": true
+    },
+    {
+      "name": "v1_role_order",
+      "passed": true
+    },
+    {
+      "name": "invalid_prompt_version_rejected",
+      "passed": true
+    },
+    {
+      "name": "comparison_plan_pending",
+      "passed": true
+    },
+    {
+      "name": "four_homework_answers_visible",
+      "passed": true
+    }
+  ],
+  "model_calls": 0,
+  "business_data_reads": 0,
+  "model_quality_comparison": "待验证",
+  "sources": {
+    "completion": "用户索要答案按既有约定登记完成后对照",
+    "homework_implementation": "助手依用户要求补入原文件",
+    "verification": "本次在fde实际运行；手写assistant示例不是模型响应"
+  },
+  "legacy_tests": "本次未改动C01代码，未重跑历史31项；不将历史结果登记为本轮结果。"
+}
