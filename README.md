@@ -4,7 +4,7 @@
 
 当前可生成报告提纲、会议议程和邮件草稿，并按任务编号查询当前进程内的成功或失败记录；尚未接入真实业务数据、SQL、RAG 或自主工具循环。
 
-新增的 **C04 LLM 工程与上下文工程** 独立放在 [`llm/`](llm/README.md)，代码与记录均与 C01 分开。2026-11-02，Lesson01–02已完成，用户完成确认、助手补录与实际离线验证分别记录；下一课为C04 Lesson03。
+新增的 **C04 LLM 工程与上下文工程** 独立放在 [`llm/`](llm/README.md)，代码与记录均与 C01 分开。2026-11-09，Lesson01–03已完成，用户完成确认、助手补录与实际离线验证分别记录；下一课为C04 Lesson04。
 
 ## C01 服务与后端：课程与进度
 
@@ -25,6 +25,7 @@ Lesson03 目录保留原路径，内容已由教师示例整理为用户完成�
 |---|---|---|
 | C04 Lesson01：从文本生成到 LLM 应用的输入输出设计 | 已完成；任务契约、四项缺失检查、消息构造、手写期望输出；本轮为离线验证 | [LLM模块入口](llm/README.md) · [课堂代码](llm/lesson01.py) · [讲义](llm/docs/C04-Lesson01-notes.md) · [作业与参考答案](llm/docs/C04-Lesson01-homework.md) · [handoff](llm/docs/C04-Lesson01-handoff.md) |
 | C04 Lesson02：提示结构与示例 | 已完成；V0无示例，V1三组示例；四题答案已补入原文件，真实生成效果待验证 | [代码](llm/lesson02.py) · [讲义](llm/docs/C04-Lesson02-notes.md) · [四题答案](llm/docs/C04-Lesson02-homework.md) · [handoff](llm/docs/C04-Lesson02-handoff.md) |
+| C04 Lesson03：上下文组织 | 已完成；保留D03冲突样例，四题答案与来源检查，未调用模型 | [代码](llm/lesson03.py) · [讲义](llm/docs/C04-Lesson03-notes.md) · [四题答案](llm/docs/C04-Lesson03-homework.md) · [handoff](llm/docs/C04-Lesson03-handoff.md) |
 
 ```bash
 # 仓库根目录，沿用Conda fde；本课仅使用Python标准库
@@ -32,9 +33,11 @@ python -B llm/lesson01.py
 python -B -m llm.lesson01
 python -B llm/lesson02.py
 python -B -m llm.lesson02
+python -B llm/lesson03.py
+python -B -m llm.lesson03
 ```
 
-本课不启动FastAPI、不读取.env、不调用模型、不读取订单或执行统计。输出包括程序生成的输入检查结果、待发送消息，以及明确标注为手写的参考JSON。Lesson02已完成三组示例构造与四题作业；真实模型效果尚未比较。C04 Lesson03–08尚未授课；RAG预习与正式模块均未开始。
+本课不启动FastAPI、不读取.env、不调用模型、不读取订单或执行统计。输出包括程序生成的输入检查结果、待发送消息，以及明确标注为手写的参考JSON。Lesson02已完成三组示例构造与四题作业；真实模型效果尚未比较。Lesson03已完成上下文与来源组织，引用支持及抗注入效果未验证。C04 Lesson04–08尚未授课；RAG预习与正式模块均未开始。
 
 ## C01 环境与启动
 
@@ -127,6 +130,8 @@ Lesson06复用Lesson05服务。基线采集器位于examples/lesson06/run_baseli
 
 ## 后续记录方式
 
-先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。2026-10-18 的 C01 交接将下一模块记为 C02 Transformer；该历史记录保留。当前接续位置已更新为 C04 Lesson03，C04 内容独立保存于 llm/；异步和数据库状态保存留待后续对应课程。2026-10-31、2026-11-02用户分别明确要求同步C04 Lesson01和Lesson02，同时保留原C01内容。
+先在聊天中上课、做作业并对答案；用户明确要求“同步到 GitHub”后，再统一整理代码、handoff、作业记录和课程进度并上传到本仓库。2026-10-18 的 C01 交接将下一模块记为 C02 Transformer；该历史记录保留。当前接续位置已更新为 C04 Lesson04，C04 内容独立保存于 llm/；异步和数据库状态保存留待后续对应课程。2026-10-31、2026-11-02用户分别明确要求同步C04 Lesson01和Lesson02，同时保留原C01内容。
 
 真实 .env、API Key、虚拟环境与缓存始终排除，只提交空密钥的 .env.example。
+
+2026-11-09：用户明确授权同步C04 Lesson03；课堂文件保留在指定目录，仓库llm/保留同步副本。

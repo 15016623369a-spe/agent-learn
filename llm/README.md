@@ -4,7 +4,7 @@
 
 主项目：企业知识驱动的办公分析与报告 Agent。
 
-截至 2026-11-02（Asia/Shanghai），**C04 Lesson01–02 已完成**：完成确认、助手补录与实际离线验证分别登记。下一课为 Lesson03；模型生成效果比较仍待验证。
+截至 2026-11-09（Asia/Shanghai），**C04 Lesson01–03 已完成**：完成确认、助手补录与实际离线验证分别登记。下一课为 Lesson04；模型生成效果比较仍待验证。
 
 ## 文件入口
 
@@ -29,6 +29,13 @@
 
 日常课堂目录固定为 `/Users/jace/agent学习/llm/`；本仓库的llm/为用户明确保留的同步副本。先在课堂目录学习，明确要求同步后再更新仓库。
 
+## Lesson03入口
+
+- [课堂代码](lesson03.py)：上下文分组、来源索引、四题演示。
+- [讲义](docs/C04-Lesson03-notes.md)与[四题答案](docs/C04-Lesson03-homework.md)。
+- [实际输出](docs/C04-Lesson03-output.txt)与[验证记录](docs/C04-Lesson03-verification.json)。
+- [课程交接](docs/C04-Lesson03-handoff.md)：下一课Lesson04。
+
 ## 运行
 
 沿用 Conda `fde`，本次核验 Python 3.11.16；本课只使用标准库，无需安装依赖、API Key 或模型文件。
@@ -41,6 +48,8 @@ python -B llm/lesson01.py
 python -B -m llm.lesson01
 python -B llm/lesson02.py
 python -B -m llm.lesson02
+python -B llm/lesson03.py
+python -B -m llm.lesson03
 ```
 
 编辑器直接运行 `llm/lesson01.py` 时选择 `fde` 解释器。Lesson01没有项目内导入；Lesson02按启动方式复用同目录Lesson01函数，不需要额外的路径注入。
@@ -53,8 +62,8 @@ python -B -m llm.lesson02
 |---|---|---|
 | 01 | 从文本生成到 LLM 应用的输入输出设计 | 已完成；本次离线复验通过 |
 | 02 | 提示结构与示例 | 已完成；三组示例与四题答案，离线验证通过 |
-| 03 | 上下文组织 | 下一课，未授课 |
-| 04 | Token 预算与信息取舍 | 未授课 |
+| 03 | 上下文组织 | 已完成；用户D03保留，四题演示与离线验证 |
+| 04 | Token 预算与信息取舍 | 下一课，未授课 |
 | 05 | JSON 与 Schema | 未授课 |
 | 06 | 输出校验与失败处理 | 未授课 |
 | 07 | 提示与上下文回归评估 | 未授课 |
@@ -65,3 +74,5 @@ python -B -m llm.lesson02
 ## 记录约定
 
 聊天作为主要课堂，先讲解再代码，最后统一四题作业。每课保留一份课堂实现及用户学习注释。用户确认完成、代码实际检查、助手补录和真实模型调用分别记录。收到明确同步要求后再整理上传；Lesson01同步于2026-10-31授权，Lesson02同步于2026-11-02明确授权。
+
+Lesson03于2026-11-09明确授权同步；仅验证上下文组织和来源追踪，引用支持和模型抗注入效果未验证。

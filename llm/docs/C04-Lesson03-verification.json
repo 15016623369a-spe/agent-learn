@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "environment": "Conda fde",
+  "python_version": "3.11.16",
+  "source_sha256": "b92ab372f21d8b7baa25e1311aab85120e17f1b573f6f2ac0206506c7744e9d1",
+  "checks_passed": 15,
+  "checks_total": 15,
+  "checks": [
+    {
+      "name": "canonical_and_repository_entrypoints_equal",
+      "passed": true
+    },
+    {
+      "name": "canonical_and_repository_source_equal",
+      "passed": true
+    },
+    {
+      "name": "one_history_three_documents_one_tool",
+      "passed": true
+    },
+    {
+      "name": "source_ids",
+      "passed": true
+    },
+    {
+      "name": "message_roles",
+      "passed": true
+    },
+    {
+      "name": "untrusted_text_stays_in_documents",
+      "passed": true
+    },
+    {
+      "name": "tool_not_executed",
+      "passed": true
+    },
+    {
+      "name": "D03_traces_to_documents",
+      "passed": true
+    },
+    {
+      "name": "user_unit_conflict_preserved",
+      "passed": true
+    },
+    {
+      "name": "unknown_reference_rejected",
+      "passed": true
+    },
+    {
+      "name": "empty_question_rejected",
+      "passed": true
+    },
+    {
+      "name": "duplicate_source_rejected",
+      "passed": true
+    },
+    {
+      "name": "nested_copy_isolated",
+      "passed": true
+    },
+    {
+      "name": "handwritten_answer_shape_and_references",
+      "passed": true
+    },
+    {
+      "name": "homework_and_failure_examples_visible",
+      "passed": true
+    }
+  ],
+  "model_calls": 0,
+  "order_reads": 0,
+  "business_calculations": 0,
+  "semantic_citation_validation": "未实现；课堂输出的反例分析为手写",
+  "prompt_injection_resistance": "未验证真实模型效果",
+  "provenance": {
+    "user_existing_code": "原文件已有D03，完整保留",
+    "assistant_additions": "run_homework四题参考演示及记录",
+    "completion": "按用户索要答案的既有完成确认约定登记"
+  },
+  "legacy_tests": "未改动旧课程代码，本轮不重复登记历史测试结果"
+}
