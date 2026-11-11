@@ -18,11 +18,42 @@
 
 二者当前还标注相同的文档/v2/第2节，不能据编号不同就断言存在两个已确认版本。需要核实原文、适用范围和字段真实单位，确认后再确定口径；不能按资料先后选择，也不能仅凭字段名含fen就完成业务核验。
 
+用固定数值 `10000` 对照两种解释。按 D01 的“分”换算得到 100 元，按 D03 的“元”得到 10000 元，相差 100 倍。这是单位换算示例，订单金额仍需以核实后的字段单位和计算结果为依据。
+
+```python
+resolve_sources(context, ["D03"])
+# {'D03': {'group': 'documents', 'source': '教学文档/订单统计口径/v2/第2节'}}
+```
+
+当前 D01、D03 的位置标签相同。两条记录能分别定位到上下文中的条目，定位结果仍需回到原文、数据字段定义和适用期间核验。
+
 ## 第3题：重复编号与未知编号
 
 run_homework先deepcopy文档列表，把副本里的D03改成D01，再调用build_context，得到“来源编号重复：D01”。原上下文未被改写，因此之后仍能追踪D03。
 
 再调用resolve_sources(context, ["D99"])，得到“未知来源编号：['D99']”。重复编号在构造上下文索引时被拒绝，未知编号在按引用查询索引时被拒绝。复制后修改可避免演示错误破坏正常课堂数据。
+
+用课堂函数复现两种错误。两个 `try` 分开执行，便于观察各自的异常。
+
+```python
+from copy import deepcopy
+
+trial_documents = deepcopy(context["documents"])
+for record in trial_documents:
+    if record["source_id"] == "D03":
+        record["source_id"] = "D01"
+
+try:
+    build_context(context["question"], context["history"],
+                  trial_documents, context["tool_results"])
+except ValueError as exc:
+    print(exc)  # 来源编号重复：D01
+
+try:
+    resolve_sources(context, ["D99"])
+except ValueError as exc:
+    print(exc)  # 未知来源编号：['D99']
+```
 
 ## 第4题：带来源的期望回答与反例
 
