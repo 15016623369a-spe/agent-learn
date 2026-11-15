@@ -4,7 +4,7 @@
 
 主项目：企业知识驱动的办公分析与报告 Agent。
 
-截至 2026-11-09（Asia/Shanghai），**C04 Lesson01–03 已完成**：完成确认、助手补录与实际离线验证分别登记。下一课为 Lesson04；模型生成效果比较仍待验证。
+截至 2026-11-15（Asia/Shanghai），**C04 Lesson01–04 已完成**。下一课是 Lesson05《JSON 与 Schema》。
 
 ## 文件入口
 
@@ -36,9 +36,14 @@
 - [实际输出](docs/C04-Lesson03-output.txt)与[验证记录](docs/C04-Lesson03-verification.json)。
 - [课程交接](docs/C04-Lesson03-handoff.md)：下一课Lesson04。
 
+## Lesson04 入口
+
+- [课堂代码](lesson04.py)实现实际 Token 计数、输出预留和按顺序移除可选资料。
+- [讲义](docs/C04-Lesson04-notes.md) · [四题答案](docs/C04-Lesson04-homework.md) · [交接](docs/C04-Lesson04-handoff.md)
+
 ## 运行
 
-沿用 Conda `fde`，本次核验 Python 3.11.16；本课只使用标准库，无需安装依赖、API Key 或模型文件。
+沿用 Conda `fde` 和 Python 3.11.16。Lesson01–03 使用标准库。Lesson04 使用现有的 `huggingface_hub`、`Jinja2` 和 `tokenizers`，读取 C03 固定版本的本地分词器缓存。
 
 在仓库根目录执行：
 
@@ -50,6 +55,8 @@ python -B llm/lesson02.py
 python -B -m llm.lesson02
 python -B llm/lesson03.py
 python -B -m llm.lesson03
+python -B llm/lesson04.py
+python -B -m llm.lesson04
 ```
 
 编辑器直接运行 `llm/lesson01.py` 时选择 `fde` 解释器。Lesson01没有项目内导入；Lesson02按启动方式复用同目录Lesson01函数，不需要额外的路径注入。
@@ -63,8 +70,8 @@ python -B -m llm.lesson03
 | 01 | 从文本生成到 LLM 应用的输入输出设计 | 已完成；本次离线复验通过 |
 | 02 | 提示结构与示例 | 已完成；三组示例与四题答案，离线验证通过 |
 | 03 | 上下文组织 | 已完成；用户D03保留，四题演示与离线验证 |
-| 04 | Token 预算与信息取舍 | 下一课，未授课 |
-| 05 | JSON 与 Schema | 未授课 |
+| 04 | Token 预算与信息取舍 | 已完成，实际分词与四题离线复核通过 |
+| 05 | JSON 与 Schema | 下一课 |
 | 06 | 输出校验与失败处理 | 未授课 |
 | 07 | 提示与上下文回归评估 | 未授课 |
 | 08 | 办公分析输入输出综合实践 | 未授课 |

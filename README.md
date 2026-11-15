@@ -4,7 +4,7 @@
 
 当前可生成报告提纲、会议议程和邮件草稿，并按任务编号查询当前进程内的成功或失败记录；尚未接入真实业务数据、SQL、RAG 或自主工具循环。
 
-新增的 **C04 LLM 工程与上下文工程** 独立放在 [`llm/`](llm/README.md)，代码与记录均与 C01 分开。2026-11-09，Lesson01–03已完成，用户完成确认、助手补录与实际离线验证分别记录；下一课为C04 Lesson04。
+新增的 **C04 LLM 工程与上下文工程** 独立放在 [`llm/`](llm/README.md)，代码与记录均与 C01 分开。截至 2026-11-15，Lesson01–04 已完成。下一课是 Lesson05《JSON 与 Schema》。
 
 ## C01 服务与后端：课程与进度
 
@@ -26,18 +26,21 @@ Lesson03 目录保留原路径，内容已由教师示例整理为用户完成�
 | C04 Lesson01：从文本生成到 LLM 应用的输入输出设计 | 已完成；任务契约、四项缺失检查、消息构造、手写期望输出；本轮为离线验证 | [LLM模块入口](llm/README.md) · [课堂代码](llm/lesson01.py) · [讲义](llm/docs/C04-Lesson01-notes.md) · [作业与参考答案](llm/docs/C04-Lesson01-homework.md) · [handoff](llm/docs/C04-Lesson01-handoff.md) |
 | C04 Lesson02：提示结构与示例 | 已完成；V0无示例，V1三组示例；四题答案已补入原文件，真实生成效果待验证 | [代码](llm/lesson02.py) · [讲义](llm/docs/C04-Lesson02-notes.md) · [四题答案](llm/docs/C04-Lesson02-homework.md) · [handoff](llm/docs/C04-Lesson02-handoff.md) |
 | C04 Lesson03：上下文组织 | 已完成；保留D03冲突样例，四题答案与来源检查，未调用模型 | [代码](llm/lesson03.py) · [讲义](llm/docs/C04-Lesson03-notes.md) · [四题答案](llm/docs/C04-Lesson03-homework.md) · [handoff](llm/docs/C04-Lesson03-handoff.md) |
+| C04 Lesson04 · Token 预算与信息取舍 | 已完成，实测格式化后的输入长度与超限处理 | [代码](llm/lesson04.py) · [讲义](llm/docs/C04-Lesson04-notes.md) · [四题答案](llm/docs/C04-Lesson04-homework.md) · [交接](llm/docs/C04-Lesson04-handoff.md) |
 
 ```bash
-# 仓库根目录，沿用Conda fde；本课仅使用Python标准库
+# 仓库根目录，沿用 Conda fde
 python -B llm/lesson01.py
 python -B -m llm.lesson01
 python -B llm/lesson02.py
 python -B -m llm.lesson02
 python -B llm/lesson03.py
 python -B -m llm.lesson03
+python -B llm/lesson04.py
+python -B -m llm.lesson04
 ```
 
-本课不启动FastAPI、不读取.env、不调用模型、不读取订单或执行统计。输出包括程序生成的输入检查结果、待发送消息，以及明确标注为手写的参考JSON。Lesson02已完成三组示例构造与四题作业；真实模型效果尚未比较。Lesson03已完成上下文与来源组织，引用支持及抗注入效果未验证。C04 Lesson04–08尚未授课；RAG预习与正式模块均未开始。
+本课不启动FastAPI、不读取.env、不调用模型、不读取订单或执行统计。输出包括程序生成的输入检查结果、待发送消息，以及明确标注为手写的参考JSON。Lesson02已完成三组示例构造与四题作业；真实模型效果尚未比较。Lesson03已完成上下文与来源组织，引用支持及抗注入效果未验证。Lesson04 使用本地缓存的 Qwen 模板和分词器测量输入长度，给输出预留空间，并按资料优先级处理超限。RAG 预习与正式模块均未开始。
 
 ## C01 环境与启动
 
