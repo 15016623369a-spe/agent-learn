@@ -4,7 +4,7 @@
 
 主项目：企业知识驱动的办公分析与报告 Agent。
 
-截至 2026-11-15（Asia/Shanghai），**C04 Lesson01–06 已完成**。下一课是 Lesson07《提示与上下文回归评估》。
+截至 2026-11-16（Asia/Shanghai），**C04 八节均已授课**，Lesson07 的个人作业待确认。下一模块为 C05《工具调用与 SQL》。
 
 ## 文件入口
 
@@ -51,9 +51,17 @@
 - [课堂代码](lesson06.py)包含三层校验、一次格式修正和四题参考演示。
 - [讲义](docs/C04-Lesson06-notes.md) · [四题答案](docs/C04-Lesson06-homework.md) · [交接](docs/C04-Lesson06-handoff.md)
 
+## Lesson07 入口
+
+- [课堂代码](lesson07.py) · [讲义与作业](docs/C04-Lesson07-notes.md) · [交接](docs/C04-Lesson07-handoff.md)
+
+## Lesson08 入口
+
+- [课堂代码](lesson08.py) · [讲义](docs/C04-Lesson08-notes.md) · [四题答案](docs/C04-Lesson08-homework.md) · [交接](docs/C04-Lesson08-handoff.md)
+
 ## 运行
 
-沿用 Conda `fde` 和 Python 3.11.16。Lesson01–03 使用标准库。Lesson04 使用现有的 `huggingface_hub`、`Jinja2` 和 `tokenizers`，读取 C03 固定版本的本地分词器缓存。Lesson05–06 使用现有的 `jsonschema` 4.26.0。
+沿用 Conda `fde` 和 Python 3.11.16。Lesson01–03 使用标准库。Lesson04 使用现有的 `huggingface_hub`、`Jinja2` 和 `tokenizers`，读取 C03 固定版本的本地分词器缓存。Lesson05–08 使用现有的 `jsonschema` 4.26.0。Lesson08 也使用 Lesson04 的分词器缓存。
 
 在仓库根目录执行：
 
@@ -71,6 +79,10 @@ python -B llm/lesson05.py
 python -B -m llm.lesson05
 python -B llm/lesson06.py
 python -B -m llm.lesson06
+python -B llm/lesson07.py
+python -B -m llm.lesson07
+python -B llm/lesson08.py
+python -B -m llm.lesson08
 ```
 
 编辑器直接运行 `llm/lesson01.py` 时选择 `fde` 解释器。Lesson01没有项目内导入；Lesson02按启动方式复用同目录Lesson01函数，不需要额外的路径注入。
@@ -87,8 +99,8 @@ python -B -m llm.lesson06
 | 04 | Token 预算与信息取舍 | 已完成，实际分词与四题离线复核通过 |
 | 05 | JSON 与 Schema | 已完成，课堂和四题离线复核通过 |
 | 06 | 输出校验与失败处理 | 已完成，课堂和四题离线复核通过 |
-| 07 | 提示与上下文回归评估 | 下一课 |
-| 08 | 办公分析输入输出综合实践 | 未授课 |
+| 07 | 提示与上下文回归评估 | 已授课，12 条离线评分复核，个人作业待确认 |
+| 08 | 办公分析输入输出综合实践 | 已完成，七条课堂路径和四道题复核 |
 
 本轮没有调用模型、读取业务数据或计算金额。`ready_for_calculation` 只表示必需信息已经声明，需要继续核验数据来源与业务含义。手写 JSON 不是模型响应。RAG 预习尚未执行，正式 RAG 尚未开始。
 
